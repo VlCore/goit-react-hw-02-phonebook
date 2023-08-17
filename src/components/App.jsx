@@ -4,6 +4,7 @@ import { SimpleForm } from "./Form/SimpleForm";
 import { nanoid } from 'nanoid'
 import { ContactsList } from "./ContactsList/ContactsList";
 import { Filter } from "./Filter/Filter";
+// import { filterContacts } from './ContactsList/ContactFilter';
 import { Container, GeneralTitle } from "./App.styled";
 
 export class App extends Component{
@@ -14,7 +15,7 @@ export class App extends Component{
     {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
     {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
   ],
-  filter: '',
+  searchTerm: '',
   }
   
   onAddContact = (user) => {
@@ -34,16 +35,16 @@ export class App extends Component{
     })) 
   }
 
-  onCheangedFilter = ({ target:{name, value}}) => {
-    this.setState({[name]: value, })
-  }
+  onCheangedFilter = ({ target: { value } }) => {
+    this.setState({ searchTerm: value });
+  };
   
   removeContact = (id) => {
     this.setState((preState) => ({ contacts: preState.contacts.filter(contact => contact.id !== id) }))
   }
 
   render() {
-    const{filter, contacts}=this.state
+    const{contacts}=this.state
     return (
       <Container>
         <GeneralTitle>Phonebook</GeneralTitle>
@@ -52,14 +53,15 @@ export class App extends Component{
         </Section>
 
         <Section title="Find contacts by name">
-          <Filter onCheangedFilter={this.onCheangedFilter} filterValue={filter} />
+        <Filter onCheangedFilter={this.onCheangedFilter} filterValue={this.state.filter} />
         </Section>
 
         <Section title="Contacts">
-          <ContactsList
-            contacts={contacts}
-            filter={filter}
-            removeContact={this.removeContact} />
+        <ContactsList
+  contacts={contacts}
+  searchTerm={this.state.searchTerm}
+  removeContact={this.removeContact}
+/>
         </Section>
         </Container>
     );}

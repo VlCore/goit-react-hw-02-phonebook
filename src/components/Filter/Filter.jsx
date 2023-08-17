@@ -15,6 +15,6 @@ export const Filter = ({ onCheangedFilter, filterValue }) => {
 }
 
 Filter.propTypes = {
-    filterValue: PropTypes.string.isRequired,
+    // filterValue: PropTypes.string.isRequired,
     onCheangedFilter:PropTypes.func.isRequired,
 };
