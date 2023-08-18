@@ -35,6 +35,13 @@ export class App extends Component{
     })) 
   }
 
+  getFilteredContacts() {
+    const { contacts, searchTerm } = this.state;
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }
+
   onCheangedFilter = ({ target: { value } }) => {
     this.setState({ searchTerm: value });
   };
@@ -44,7 +51,8 @@ export class App extends Component{
   }
 
   render() {
-    const{contacts}=this.state
+    const { contacts, searchTerm } = this.state;
+  const filteredContacts = this.getFilteredContacts();
     return (
       <Container>
         <GeneralTitle>Phonebook</GeneralTitle>
@@ -58,7 +66,7 @@ export class App extends Component{
 
         <Section title="Contacts">
         <ContactsList
-  contacts={contacts}
+  contacts={filteredContacts}
   searchTerm={this.state.searchTerm}
   removeContact={this.removeContact}
 />
